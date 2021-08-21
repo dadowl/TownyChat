@@ -14,6 +14,7 @@ import com.palmergames.bukkit.TownyChat.util.FileMgmt;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.util.Version;
 
+import dev.dadowl.mothquiet.Politic;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -45,6 +46,7 @@ public class Chat extends JavaPlugin {
 	protected PluginManager pm;
 	private Towny towny = null;
 	private DynmapAPI dynMap = null;
+	private Politic politic = null;
 	
 	private static Version requiredTownyVersion = Version.fromString("0.97.0.0");
 	public static boolean usingPlaceholderAPI = false;
@@ -112,6 +114,7 @@ public class Chat extends JavaPlugin {
 
 		dynMap = null;
 		towny = null;
+		politic = null;
 		pm = null;
 		
 		channelsConfig = null;
@@ -139,6 +142,12 @@ public class Chat extends JavaPlugin {
 		test = pm.getPlugin("dynmap");
 		if (test != null && pm.getPlugin("dynmap").isEnabled()) {
 			dynMap = (DynmapAPI) test;
+		}
+
+		test = pm.getPlugin("Politic");
+		if (test != null && pm.getPlugin("Politic").isEnabled()) {
+			politic = (Politic) test;
+			getLogger().info("Politic integration is enabled");
 		}
 		
 		test = pm.getPlugin("PlaceholderAPI");
@@ -211,7 +220,10 @@ public class Chat extends JavaPlugin {
 	public Towny getTowny() {
 		return towny;
 	}
-	
+
+	public Politic getPolitic() {
+		return politic;
+	}
 
 	public DynmapAPI getDynmap() {
 		return dynMap;
