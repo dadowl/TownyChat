@@ -4,6 +4,7 @@ import com.palmergames.bukkit.TownyChat.Chat;
 import com.palmergames.bukkit.TownyChat.HexFormatter;
 import com.palmergames.bukkit.TownyChat.TownyChatFormatter;
 import com.palmergames.bukkit.TownyChat.channels.Channel;
+import com.palmergames.bukkit.TownyChat.channels.ChannelsHolder;
 import com.palmergames.bukkit.TownyChat.channels.channelTypes;
 import com.palmergames.bukkit.TownyChat.config.ChatSettings;
 import com.palmergames.bukkit.TownyChat.tasks.onPlayerJoinTask;
@@ -14,6 +15,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.TownyUniverse;
 
+import dev.dadowl.mothquiet.PoliticPlayer.PoliticPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -38,14 +40,26 @@ public class TownyChatPlayerListener implements Listener  {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerJoin(final PlayerJoinEvent event) {
 		
-		Bukkit.getScheduler().runTaskLater(plugin, () -> loginPlayer(event.getPlayer()), 1l);
+		Bukkit.getScheduler().runTaskLater(plugin, () -> loginPlayer(event.getPlayer()), 6);
 
 	}
 
 	private void loginPlayer(Player player) {
 		refreshPlayerChannels(player);
+		ChannelsHolder holder = plugin.getChannelsHandler();
+		Channel channel = null;
+		PoliticPlayer pp = plugin.getPolitic().getPoliticPlayer(player.getUniqueId());
 
-		Channel channel = plugin.getChannelsHandler().getDefaultChannel();
+		if(pp.getChatChannel().isEmpty()){
+			channel = holder.getDefaultChannel();
+		} else {
+			if (holder.getChannelByPerms(pp.getChatChannel()) != null) channel = holder.getChannelByPerms(pp.getChatChannel());
+			else {
+				plugin.getLogger().info("exeption");
+				channel = holder.getDefaultChannel();
+			}
+		}
+
 		if (channel != null &&  player.hasPermission(channel.getPermission())) {
 			// Schedule it as delayed task because Towny may not have processed this just yet
 			// and would reset the mode otherwise

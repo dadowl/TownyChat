@@ -4,11 +4,7 @@ import com.palmergames.bukkit.TownyChat.Chat;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author ElgarL
@@ -68,6 +64,11 @@ public class ChannelsHolder {
 	
 	public Channel getChannel(String channelName) {
 		return channels.get(channelName.toLowerCase());
+	}
+
+	public Channel getChannelByPerms(String perms){
+		Optional<Channel> ch = channels.values().stream().filter(it -> Objects.equals(it.getPermission(), perms)).findFirst();
+		return ch.isPresent() ? ch.get() : null;
 	}
 	
 	/**

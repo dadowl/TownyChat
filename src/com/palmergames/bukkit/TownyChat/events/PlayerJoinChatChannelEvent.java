@@ -1,5 +1,6 @@
 package com.palmergames.bukkit.TownyChat.events;
 
+import com.palmergames.bukkit.TownyChat.Chat;
 import com.palmergames.bukkit.TownyChat.channels.Channel;
 
 import org.bukkit.Bukkit;
@@ -17,10 +18,12 @@ public class PlayerJoinChatChannelEvent extends Event {
     private final Player player;
     private final Channel channel;
 
-    public PlayerJoinChatChannelEvent(Player player, Channel channel) {
+    public PlayerJoinChatChannelEvent(Player player, Channel channel, Chat plugin) {
     	super(!Bukkit.getServer().isPrimaryThread());
         this.player = player;
         this.channel = channel;
+        plugin.getPolitic().getPoliticPlayer(player.getUniqueId()).setChatChannel(channel.getPermission());
+        System.out.println(channel.getType().toString());
     }
 
     public HandlerList getHandlers() {

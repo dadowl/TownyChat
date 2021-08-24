@@ -61,7 +61,7 @@ public class StandardChannel extends Channel {
 		if (isAbsent(player.getName())) {
 			join(player);
 			notifyjoin = true;
-			Bukkit.getPluginManager().callEvent(new PlayerJoinChatChannelEvent(player, this));
+			Bukkit.getPluginManager().callEvent(new PlayerJoinChatChannelEvent(player, this, plugin));
 		}
 
 		/*

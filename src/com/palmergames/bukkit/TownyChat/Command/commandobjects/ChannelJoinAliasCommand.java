@@ -66,7 +66,7 @@ public class ChannelJoinAliasCommand extends BukkitCommand {
 							
 						plugin.getTowny().setPlayerMode(player, modes, false);
 						TownyMessaging.sendMessage(player, String.format(Translation.of("tc_you_are_now_talking_in_channel"), channel.getName()));
-						Bukkit.getPluginManager().callEvent(new PlayerJoinChatChannelEvent(player, channel));
+						Bukkit.getPluginManager().callEvent(new PlayerJoinChatChannelEvent(player, channel, plugin));
 						return true;
 					}
 				} else {

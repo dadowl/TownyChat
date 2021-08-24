@@ -384,7 +384,7 @@ public class ChannelCommand extends BaseCommand implements CommandExecutor {
 			return;
 		}
 
-		Bukkit.getPluginManager().callEvent(new PlayerJoinChatChannelEvent(player, chan));
+		Bukkit.getPluginManager().callEvent(new PlayerJoinChatChannelEvent(player, chan, plugin));
 
 		TownyMessaging.sendMessage(player, Translation.of("tc_you_joined_channel", chan.getName()));
 	}
