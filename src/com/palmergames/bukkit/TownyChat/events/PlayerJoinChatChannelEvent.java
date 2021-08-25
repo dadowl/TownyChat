@@ -23,7 +23,6 @@ public class PlayerJoinChatChannelEvent extends Event {
         this.player = player;
         this.channel = channel;
         plugin.getPolitic().getPoliticPlayer(player.getUniqueId()).setChatChannel(channel.getPermission());
-        System.out.println(channel.getType().toString());
     }
 
     public HandlerList getHandlers() {
